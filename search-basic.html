@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Customized CSS -->
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Lato|Righteous|Sniglet" rel="stylesheet">
+  
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <!-- Axios -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+  <title>Questgiver | Search</title>
+</head>
+
+<body>
+
+  <!-- Header Navbar -->
+  <nav class="nav justify-content-center">
+    <a href="./about.html">
+      <img src="assets/images/wizard.png" alt="wizard" id="wizard"></a>
+    <a class="nav-link active" id="logo" href="./index.html">Questgiver!</a>
+    <a class="nav-link" id="home-search" href="#"><i class="fas fa-search"></i> Search</a>  </nav>
+  
+
+
+  <!-- Content: Game Search -->
+  <div class="container">
+    <h1>Search for a Quest...</h1>
+      <div class="row">
+        <div class="col-md-12">
+          <form class="d-flex justify-content-center">
+            <div class="form-group text-center">
+              <input type="text" class="form-control" id="input-keyword">
+              <label for="input-keyword">(enter game keyword)</label>
+            </div>
+          </form>
+          <div class="d-flex justify-content-center">
+            <input class="btn" type="button" value="Submit" id="input-submit">
+            <!-- <input class="btn btn-secondary" type="button" value="Reset">
+            <a class="btn btn-secondary" id="search-button" role="button">Return</a> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- <h2>Or search for games by genre and platform!</h1>
+        <div class="form-group">
+          <label for="search-genre">Genre</label>
+          <select class="form-control" id="input-genre"></select>
+        </div>
+        <div class="form-group">
+          <label for="search-platform">Platform</label>
+          <select class="form-control" id="input-platform"></select>
+        </div> -->
+  </div>
+
+  <div class="container" id="result-list">
+    <h3>Quick Results</h3>
+    <div id="result-list-container">
+      <!-- list of search results to be dumped in here -->
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="fixed-bottom" id="footer"> 
+    <h6>Copyright © 2019 Questgiver | Powered by 
+    <a class="footer-link" href="https://www.giantbomb.com" target="_blank">Giantbomb</a> & 
+    <a class="footer-link" href="https://www.igdb.com/discover" target="_blank">IGDB</a></h6>
+  </div>
+  
+</body>
+
+<script src="assets/javascript/basic-search.js"></script>
+
+</html>
