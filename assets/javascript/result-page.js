@@ -31,12 +31,14 @@ $.ajax({
 
     var h4 = $('<h5>');
     var h4text = "[Genres] ";
-    for (i = 0; i < result.genres.length; i++) {
-     h4text = h4text + result.genres[i].name;
-     if (i != (result.genres.length-1)){
-        h4text = h4text + ", ";
-     }
-     h4.text(h4text);
+    if(typeof result.genres !== "undefined"){
+        for (i = 0; i < result.genres.length; i++) {
+            h4text = h4text + result.genres[i].name;
+            if (i != (result.genres.length-1)){
+               h4text = h4text + ", ";
+            }
+            h4.text(h4text);
+           }
     }
     h4.addClass('text-category');
 
