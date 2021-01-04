@@ -1,78 +1,82 @@
 const CARDSAMOUNT = 6;
 
-async function initializeCards() {
-    axios({
-        url: "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/games",
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'user-key': '9e200e5f3ba806bf8825821dd078350c',
-        },
-        //https://api-docs.igdb.com/?javascript#examples-12 and https://api-docs.igdb.com/?javascript#game
-        data: "fields name,popularity; sort popularity desc;"
-    }).then(async response => {
-        var results = response.data;
-        createCards(results, CARDSAMOUNT);
-        setCovers();
-    });
-
-};
-
-initializeCards();
-
-function createCards(results, cardsAmount) {
-    for (var i = 0; i < cardsAmount; i++) {
-        var cardDiv = $('<div>');
-        cardDiv.addClass("card");
-        cardDiv.attr("id", "card-div-" + i)
-        cardDiv.addClass("col-md-4");
-        cardDiv.addClass("trending-card");
-        cardDiv.attr("data-name", results[i].name);
-        var h = $("<h5>").text(results[i].name);
+$.ajax({
+    type: 'GET',
+    dataType: 'jsonp',
+    crossDomain: true,
+    jsonp: 'json_callback',
+    url: 'http://www.giantbomb.com/api/games/?api_key=3e367e43b48af015b21cb7640630f3fa0e510098&filter=original_release_date:2019-01-01|2020-12-30,platforms:176&sort=original_release_date:desc&limit=6&format=jsonp'
+}).done(function (response) {
+    var result = response.results;
+    console.log(result);
+    for (i = 0; i < 6; i++) {
+        var guid = "3030-" + result[i].id;
+        var div = $('<div>');
+        var h = $('<h5>').text(result[i].name);
         h.addClass("card-title");
-        var p = $("<p>").text(results[i].summary)
-        var img = $("<img>");
-        img.addClass("game-image");
-        img.attr("id", "game-image-" + i)
-        img.attr("data-gameid", results[i].id);
-        console.log("data-gameid attribute " + results[i].id);
-        img.attr("src", "https://via.placeholder.com/100");
-        cardDiv.click(loadGamePage);
-        cardDiv.append(img);
-        cardDiv.append(h);
-        cardDiv.append(p);
-        $("#trending-container").append(cardDiv);
+        div.addClass('card');
+        div.addClass('col-md-4');
+        div.attr('id', 'similar-div-' + i);
+        div.attr('data-guid', guid);
+        div.attr('data-api-url', guid);
+        div.click(loadGamePage);
+        div.append(h);
+        $('#trending-container').append(div);
+    }
+    fetchCovers();
+}).fail(function () {
+    alert("ajax error");
+});
+
+async function fetchCovers() {
+    for (i = 0; i < 6; i++) {
+        var currentguid = $('#similar-div-' + i).data('guid');
+        await $.ajax({
+            type: 'GET',
+            dataType: 'jsonp',
+            crossDomain: true,
+            jsonp: 'json_callback',
+            url: 'https://www.giantbomb.com/api/game/' + currentguid + '/?format=jsonp&api_key=3e367e43b48af015b21cb7640630f3fa0e510098'
+        }).done(function (response) {
+            console.log('cover for ' + i);
+            console.log(response);
+            var imgsrc = response.results.image.icon_url;
+            var img = $('<img>');
+            img.addClass("game-image");
+            img.attr('id', 'similar-game-img-'+i);
+            img.attr('src', imgsrc);
+            img.attr('data-guid', currentguid);
+            img.attr('data-api-url', currentguid);    
+            async function fetchCovers() {
+    for (i = 0; (i < similarGamesLength) && (i < 6); i++) {
+        var currentguid = $('#similar-div-' + i).data('guid');
+        await $.ajax({
+            type: 'GET',
+            dataType: 'jsonp',
+            crossDomain: true,
+            jsonp: 'json_callback',
+            url: 'https://www.giantbomb.com/api/game/' + currentguid + '/?format=jsonp&api_key=3e367e43b48af015b21cb7640630f3fa0e510098'
+        }).done(function (response) {
+            console.log('cover for ' + i);
+            console.log(response);
+            var imgsrc = response.results.image.icon_url;
+            var img = $('<img>');
+            img.addClass("game-image");
+            img.attr('id', 'similar-game-img-'+i);
+            img.attr('src', imgsrc);
+            $('#similar-div-' + i).prepend(img);
+        }).fail(function () {
+            alert("ajax error");
+        });
+    }
+}
+            $('#similar-div-' + i).prepend(img);
+        }).fail(function () {
+            alert("ajax error");
+        });
     }
 }
 
-async function setCovers() {
-    console.log("setCovers() called");
-    for (var i = 0; i < CARDSAMOUNT; i++) {
-        var imgsrc;
-        var img = $("#game-image-" + i);
-        var currentGameID = img.attr("data-gameid");
-
-        await axios({
-            url: "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/covers",
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'user-key': '9e200e5f3ba806bf8825821dd078350c',
-            },
-            //https://api-docs.igdb.com/?javascript#examples-12 and https://api-docs.igdb.com/?javascript#game
-            data: "fields *; where game = " + currentGameID + ";"
-        })
-            .then(function (response) {
-                imgsrc = "https:" + response.data[0].url;
-            })
-            .catch(err => {
-                console.error(err);
-            });
-
-        img.attr("src", imgsrc);
-        $("#card-div-" + i).prepend(img);
-    }
-}
 
 $(document).ready(function () {
     $(".image-carousel-ad").click(function () {
@@ -89,24 +93,6 @@ $(document).ready(function () {
 });
 
 function loadGamePage() {
-    var gameInput = $(this).data("name");
-    var gameguid;
-    $.ajax({
-        type: 'GET',
-        dataType: 'jsonp',
-        crossDomain: true,
-        jsonp: 'json_callback',
-        url: 'https://www.giantbomb.com/api/search/?format=jsonp&api_key=3e367e43b48af015b21cb7640630f3fa0e510098',
-        data: {
-            "query": gameInput,
-            "resources": "game",
-        },
-    }).done(function (response) {
-        var results = response.results;
-        gameguid = results[0].guid;
-        localStorage.setItem("guid", gameguid);
-        window.location = "results.html";
-    }).fail(function () {
-        alert("ajax error");
-    })
+    localStorage.setItem("guid", $(this).data("guid"));
+    window.location = "results.html";
 };
