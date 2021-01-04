@@ -6,7 +6,7 @@ $.ajax({
     dataType: 'jsonp',
     crossDomain: true,
     jsonp: 'json_callback',
-    url: 'https://www.giantbomb.com/api/games/?api_key=3e367e43b48af015b21cb7640630f3fa0e510098&filter=original_release_date:2019-01-01|2021-01-01,platforms:176&sort=original_release_date:desc&limit=6&format=jsonp'
+    url: 'https://www.giantbomb.com/api/games/?api_key=3e367e43b48af015b21cb7640630f3fa0e510098&filter=original_release_date:2019-01-01|' + today + ',platforms:176&sort=original_release_date:desc&limit=6&format=jsonp'
 }).done(function (response) {
     var result = response.results;
     console.log(result);
