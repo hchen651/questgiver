@@ -26,7 +26,7 @@ $.ajax({
     }
     fetchCovers();
 }).fail(function () {
-    alert("ajax error");
+    console.log("ajax error");
 });
 
 async function fetchCovers() {
