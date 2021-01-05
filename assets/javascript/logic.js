@@ -1,4 +1,3 @@
-const CARDSAMOUNT = 6;
 var today = new Date().toISOString().slice(0, 10);
 
 $.ajax({
@@ -26,7 +25,7 @@ $.ajax({
     }
     fetchCovers();
 }).fail(function () {
-    console.log("ajax error");
+    console.log("ajax error - get");
 });
 
 async function fetchCovers() {
@@ -67,13 +66,13 @@ async function fetchCovers() {
             img.attr('src', imgsrc);
             $('#similar-div-' + i).prepend(img);
         }).fail(function () {
-            alert("ajax error");
+            console.log("ajax error - cover fetch");
         });
     }
 }
             $('#similar-div-' + i).prepend(img);
         }).fail(function () {
-            alert("ajax error");
+            console.log("ajax error - cover append");
         });
     }
 }
