@@ -21,7 +21,7 @@ Try it out!: https://hchen651.github.io/questgiver/
 #### Anyone! :tada:
 
 ## Credits
-##### Collaborators: Henry Chen, Rachael Tseng, Marusol Lee, Richard Hu
+##### Collaborators: Henry Chen, Rachael Tseng, Marusol Lee, Richard Hu 
 
 ## Notes
 #### This is part of an ongoing project. Comments and feedback are much appreciated! :+1:
